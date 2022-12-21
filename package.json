@@ -1,0 +1,19 @@
+{
+  "name": "execute-command-in-nodejs",
+  "version": "1.0.0",
+  "description": "Execute Linux command or script in node js",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "keywords": [
+    "execute",
+    "command",
+    "nodejs"
+  ],
+  "author": "gupta197",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
