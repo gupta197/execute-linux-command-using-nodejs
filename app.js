@@ -12,6 +12,7 @@ app.get('/',(req,res)=>{
 app.post('/executeScript',async (req,res)=>{
     try {
         let {command} = req.body;
+        command = command ? command : "ls"
         let response = await executeShellScriptCommand(command);
         // let response = await readFile(command);
         res.status(response.status).send({
