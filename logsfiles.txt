@@ -1,0 +1,50 @@
+Checking node_modules
+/home/superman/Documents/selfProject/execute-linux-command-using-nodejs
+exist
+
+added 57 packages, and audited 58 packages in 1s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Checking node_modules
+/home/superman/Documents/selfProject/execute-linux-command-using-nodejs
+exist
+
+added 57 packages, and audited 58 packages in 1s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Checking node_modules
+/home/superman/Documents/selfProject/execute-linux-command-using-nodejs
+exist
+
+added 57 packages, and audited 58 packages in 3s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Checking node_modules
+/home/superman/Documents/selfProject/execute-linux-command-using-nodejs
+exist
+
+added 57 packages, and audited 58 packages in 1s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Checking node_modules
+/home/superman/Documents/selfProject/execute-linux-command-using-nodejs
+exist
+
+added 57 packages, and audited 58 packages in 1s
+
+7 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
