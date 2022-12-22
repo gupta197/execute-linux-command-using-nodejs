@@ -1,6 +1,7 @@
 const express = require('express'),
 app = express(),
 { exec } = require('child_process'),
+fs = require('fs')
 PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,9 +27,10 @@ app.get('/execute',async (req,res)=>{
         })
     }
 })
-app.get('/executeScript',async (req,res)=>{
+app.post('/executeScript',async (req,res)=>{
     try {
-        const {command} = req.body;
+        let {command} = req.body;
+        command = command ? command : 'bash sciptForRemoveNodeModule.sh > logsfile.txt';
         await executeShellScriptCommand(command);
         let response = await readFile(command);
         res.status(response.status).send({
@@ -52,8 +54,8 @@ app.get('/removenodemodules',async (req,res)=>{
             cmd = `cd ${__dirname}/ && npm i`
         }
        cmd = script ? "sh script.sh >> logsfiles.txt" : cmd;
-        let rmnodemodules = await executeShellCommands(cmd);
-        if(rmnodemodules.message.indexOf("npm WARN") > -1 || rmnodemodules.status === "success"){
+        let rmnodemodules = await executeShellScriptCommand(cmd);
+        if(rmnodemodules.message.indexOf("npm WARN") > -1 || rmnodemodules.status === 200 ){
             res.send({rmnodemodules,status:200})
         }else{
             res.send({rmnodemodules,status:400,message:"Something went wrong!!!"})
@@ -83,7 +85,7 @@ const executeCommand = (cmd)=>{
 }
 const executeShellScriptCommand = (cmd)=>{
     return new Promise(function(resolve, reject) {
-        exec('bash sciptForRemoveNodeModule.sh > logsfile.txt', (error, stdout, stderr) => {
+        exec(cmd, (error, stdout, stderr) => {
             if (error) {
               console.error(`error: ${error.message}`);
             }
@@ -106,15 +108,4 @@ const readFile = (cmd)=>{
         })
     })
 }
-function executeShellCommands(cmd){
-    return new Promise((resolve, reject) => {
-        exec(cmd, (error, stdout, stderr) => {
-          if (error) {
-            console.warn(error);
-          }
-          resolve({ message : stdout ? stdout : stderr , status: stdout ? "success" : "error stderr",response: stdout ? stdout : stderr }); 
-        });
-      });
- }
-
 app.listen(PORT,()=>console.log(`App is listean on http://localhost:${PORT}/`))
