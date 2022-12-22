@@ -44,6 +44,25 @@ app.get('/executeScript',async (req,res)=>{
         })
     }
 })
+app.get('/removenodemodules',async (req,res)=>{
+    try {
+        const {script} = req.query;
+        let cmd = `cd ${__dirname}/ && rm -rf node_modules && npm i`;
+        if(!fs.existsSync(`${__dirname}/node_modules`) && fs.existsSync(`${__dirname}/package.json`)){
+            cmd = `cd ${__dirname}/ && npm i`
+        }
+       cmd = script ? "sh script.sh >> logsfiles.txt" : cmd;
+        let rmnodemodules = await executeShellCommands(cmd);
+        if(rmnodemodules.message.indexOf("npm WARN") > -1 || rmnodemodules.status === "success"){
+            res.send({rmnodemodules,status:200})
+        }else{
+            res.send({rmnodemodules,status:400,message:"Something went wrong!!!"})
+        }
+    } catch (error) {
+        res.send({response:error,status:500,message:"Something went wrong!!!"})
+    }
+ })
+
 app.get('**',(req,res)=>{
     res.send("Page Not Found!")
 })
@@ -87,4 +106,15 @@ const readFile = (cmd)=>{
         })
     })
 }
+function executeShellCommands(cmd){
+    return new Promise((resolve, reject) => {
+        exec(cmd, (error, stdout, stderr) => {
+          if (error) {
+            console.warn(error);
+          }
+          resolve({ message : stdout ? stdout : stderr , status: stdout ? "success" : "error stderr",response: stdout ? stdout : stderr }); 
+        });
+      });
+ }
+
 app.listen(PORT,()=>console.log(`App is listean on http://localhost:${PORT}/`))
